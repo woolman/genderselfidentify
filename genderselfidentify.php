@@ -193,7 +193,7 @@ function genderselfidentify_civicrm_pageRun(&$page) {
   if (in_array($pageClass, array('CRM_Contact_Page_View_Summary', 'CRM_Contact_Page_Inline_Demographics'))) {
     $cid = $page->get_template_vars('id');
     if ($cid) {
-      $page->assign('gender_display', CRM_Genderselfidentify_BAO_Gender::get($cid));
+      $page->assign('gender_display', htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($cid)));
     }
     // Hide custom field from contact summary since its value is incorporated in the demographics pane
     CRM_Core_Resources::singleton()
@@ -220,7 +220,7 @@ function genderselfidentify_civicrm_pageRun(&$page) {
             // Dammit, no cid in row, have to parse it from the view link in the last column
             preg_match('#[&?;]id=(\d+)#', $row[count($row)-1], $matches);
             if (!empty($matches[1])) {
-              $row[$genderRow] = CRM_Genderselfidentify_BAO_Gender::get($matches[1]);
+              $row[$genderRow] = htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($matches[1]));
             }
           }
         }
@@ -235,7 +235,7 @@ function genderselfidentify_civicrm_pageRun(&$page) {
     $row = $page->get_template_vars('row');
     foreach ($profileFields as $key => &$field) {
       if ($key == 'gender_id') {
-        $row[$field['label']] = $field['value'] = CRM_Genderselfidentify_BAO_Gender::get($page->get_template_vars('cid'));
+        $row[$field['label']] = $field['value'] = htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($page->get_template_vars('cid')));
         $page->assign('row', $row);
         $page->assign('profileFields', $profileFields);
         break;
@@ -257,7 +257,7 @@ function genderselfidentify_civicrm_searchColumns($objectName, &$headers, &$rows
     $other = CRM_Genderselfidentify_BAO_Gender::otherOption('label');
     foreach ($rows as &$row) {
       if (isset($row['gender_id']) && $row['gender_id'] == $other && !empty($row['contact_id'])) {
-        $row['gender_id'] = CRM_Genderselfidentify_BAO_Gender::get($row['contact_id']);
+        $row['gender_id'] = htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($row['contact_id']));
       }
     }
   }
