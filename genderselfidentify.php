@@ -154,6 +154,9 @@ function genderselfidentify_civicrm_pre($op, $objectName, $id, &$params) {
       $params['gender_id'] = CRM_Genderselfidentify_BAO_Gender::match($input);
 
       // Can't just set `$params['custom_x'] = $input` because that would be too easy
+      // For contact create
+      $params['custom_' . CRM_Genderselfidentify_BAO_Gender::getCustomFieldId() . '_-1'] = $input;
+      // For contact inline-edit
       $params += array('custom' => array());
       CRM_Core_BAO_CustomField::formatCustomField(CRM_Genderselfidentify_BAO_Gender::getCustomFieldId(), $params['custom'],
         $input, 'Individual', NULL, $id, FALSE, FALSE, TRUE
