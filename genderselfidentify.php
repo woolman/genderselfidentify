@@ -29,33 +29,7 @@ function genderselfidentify_civicrm_xmlMenu(&$files) {
  */
 function genderselfidentify_civicrm_install() {
   _genderselfidentify_civix_civicrm_install();
-  // Add "Other" gender option if it doesn't exist
-  $options = civicrm_api3('OptionValue', 'get', array('option_group_id' => 'gender'));
-  $maxValue = 1;
-  foreach ($options['values'] as $lastOption) {
-    if ($lastOption['name'] === 'Other') {
-      // Enable it
-      if (empty($lastOption['is_active'])) {
-        civicrm_api3('OptionValue', 'create', array(
-          'id' => $lastOption['id'],
-          'is_active' => 1,
-        ));
-      }
-      return;
-    }
-    if ($lastOption['value'] > $maxValue) {
-      $maxValue = $lastOption['value'];
-    }
-  }
-  // We're still here, so "Other" option needs to be added
-  civicrm_api3('OptionValue', 'create', array(
-    'option_group_id' => 'gender',
-    'name' => 'Other',
-    'label' => ts('Other'),
-    'value' => $maxValue + 1,
-    'weight' => $lastOption['weight'] + 1,
-    'is_active' => 1,
-  ));
+  _genderselfidentify_add_other_option();
 }
 
 /**
@@ -74,6 +48,7 @@ function genderselfidentify_civicrm_uninstall() {
  */
 function genderselfidentify_civicrm_enable() {
   _genderselfidentify_civix_civicrm_enable();
+  _genderselfidentify_add_other_option();
 }
 
 /**
@@ -83,6 +58,10 @@ function genderselfidentify_civicrm_enable() {
  */
 function genderselfidentify_civicrm_disable() {
   _genderselfidentify_civix_civicrm_disable();
+  civicrm_api3('OptionValue', 'create', array(
+    'id' => CRM_Genderselfidentify_BAO_Gender::otherOption('id'),
+    'is_reserved' => 0,
+  ));
 }
 
 /**
@@ -261,4 +240,41 @@ function genderselfidentify_civicrm_searchColumns($objectName, &$headers, &$rows
       }
     }
   }
+}
+
+/**
+ * Add "Other" gender option if it doesn't exist
+ * Ensure it is enabled and reserved if it already exists
+ *
+ * @throws \CiviCRM_API3_Exception
+ */
+function _genderselfidentify_add_other_option() {
+  $options = civicrm_api3('OptionValue', 'get', array('option_group_id' => 'gender'));
+  $maxValue = 1;
+  foreach ($options['values'] as $lastOption) {
+    if ($lastOption['name'] === 'Other') {
+      // Make sure it is enabled and reserved
+      if (empty($lastOption['is_active']) || empty($lastOption['is_reserved'])) {
+        civicrm_api3('OptionValue', 'create', array(
+          'id' => $lastOption['id'],
+          'is_active' => 1,
+          'is_reserved' => 1,
+        ));
+      }
+      return;
+    }
+    if ($lastOption['value'] > $maxValue) {
+      $maxValue = $lastOption['value'];
+    }
+  }
+  // We're still here, so "Other" option needs to be added
+  civicrm_api3('OptionValue', 'create', array(
+    'option_group_id' => 'gender',
+    'name' => 'Other',
+    'label' => ts('Other'),
+    'value' => $maxValue + 1,
+    'weight' => $lastOption['weight'] + 1,
+    'is_active' => 1,
+    'is_reserved' => 1,
+  ));
 }
