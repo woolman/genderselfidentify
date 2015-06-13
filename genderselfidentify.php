@@ -108,9 +108,7 @@ function genderselfidentify_civicrm_alterSettingsFolders(&$metaDataFolders = NUL
  */
 function genderselfidentify_civicrm_apiWrappers(&$wrappers, $apiRequest) {
   if (strtolower($apiRequest['entity']) == 'contact') {
-    // 4.4 needs this require_once; the autoloader in 4.5+ will do it automatically
-    require_once "api/v3/GenderselfidentifyAPIWrapper.php";
-    $wrappers[] = new api_v3_GenderselfidentifyAPIWrapper();
+    $wrappers[] = new CRM_Genderselfidentify_ContactAPIWrapper();
   }
 }
 

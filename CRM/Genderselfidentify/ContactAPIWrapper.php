@@ -1,5 +1,5 @@
 <?php
-class api_v3_GenderselfidentifyAPIWrapper implements API_Wrapper {
+class CRM_Genderselfidentify_ContactAPIWrapper implements API_Wrapper {
   /**
    * @inheritdoc
    */
