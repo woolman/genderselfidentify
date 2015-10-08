@@ -148,7 +148,7 @@ function genderselfidentify_civicrm_pre($op, $objectName, $id, &$params) {
   if ($objectName == 'Individual' && in_array($op, array('create', 'edit'))) {
     // $params['version'] indicates this is an api request, which we've already handled with api_v3_GenderselfidentifyAPIWrapper
     if (isset($params['gender_id']) && empty($params['version'])) {
-      $input = $params['gender_id'];
+      $input = trim($params['gender_id']);
       $params['gender_id'] = CRM_Genderselfidentify_BAO_Gender::match($input);
 
       // Can't just set `$params['custom_x'] = $input` because that would be too easy

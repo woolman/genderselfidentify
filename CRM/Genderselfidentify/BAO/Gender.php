@@ -43,9 +43,8 @@ class CRM_Genderselfidentify_BAO_Gender {
     if (!$contactId) {
       return '';
     }
-    $customFieldId = 'custom_' . self::getCustomFieldId();
     $contact = civicrm_api3('Contact', 'getsingle', array(
-      'return' => array('gender_id', $customFieldId),
+      'return' => array('gender_id'),
       'id' => $contactId,
     ));
     // Our api wrapper will have done all the work, just return it
@@ -58,6 +57,7 @@ class CRM_Genderselfidentify_BAO_Gender {
    * @throws \CiviCRM_API3_Exception
    */
   public static function match($input) {
+    $input = trim($input);
     if ($input) {
       $genderOptions = civicrm_api3('contact', 'getoptions', array('field' => 'gender_id'));
       $genderOptions = $genderOptions['values'];
@@ -69,7 +69,8 @@ class CRM_Genderselfidentify_BAO_Gender {
           return $key;
         }
       }
+      return CRM_Genderselfidentify_BAO_Gender::otherOption();
     }
-    return CRM_Genderselfidentify_BAO_Gender::otherOption();
+    return '';
   }
 }
