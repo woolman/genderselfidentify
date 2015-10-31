@@ -49,6 +49,18 @@ function genderselfidentify_civicrm_uninstall() {
 function genderselfidentify_civicrm_enable() {
   _genderselfidentify_civix_civicrm_enable();
   _genderselfidentify_add_other_option();
+
+  $group = civicrm_api3('CustomGroup', 'get', array(
+    'name' => 'Genderselfidentify',
+  ));
+  if (!empty($group['id'])) {
+    // CustomGroup 'create' is broken for update
+    civicrm_api3('CustomGroup', 'update', array(
+      'id' => $group['id'],
+      'is_reserved' => 1,
+      'is_active' => 1,
+    ));
+  }
 }
 
 /**
@@ -58,10 +70,25 @@ function genderselfidentify_civicrm_enable() {
  */
 function genderselfidentify_civicrm_disable() {
   _genderselfidentify_civix_civicrm_disable();
-  civicrm_api3('OptionValue', 'create', array(
-    'id' => CRM_Genderselfidentify_BAO_Gender::otherOption('id'),
-    'is_reserved' => 0,
-  ));
+  try {
+    $group = civicrm_api3('CustomGroup', 'get', array(
+      'name' => 'Genderselfidentify',
+    ));
+    if (!empty($group['id'])) {
+      // CustomGroup 'create' is broken for update
+      civicrm_api3('CustomGroup', 'update', array(
+        'id' => $group['id'],
+        'is_reserved' => 0,
+        'is_active' => 0,
+      ));
+    }
+    civicrm_api3('OptionValue', 'create', array(
+      'id' => CRM_Genderselfidentify_BAO_Gender::otherOption('id'),
+      'is_reserved' => 0,
+    ));
+  }
+  // If custom data doesn't exist, ignore
+  catch (API_Exception $e) {}
 }
 
 /**
