@@ -27,7 +27,11 @@ class CRM_Genderselfidentify_BAO_Gender {
   public static function otherOption($ret = 'value') {
     static $option;
     if (!$option) {
-      $option = civicrm_api3('OptionValue', 'getsingle', array('option_group_id' => 'gender', 'name' => 'Other'));
+      $option = civicrm_api3('OptionValue', 'getsingle', array(
+        'option_group_id' => 'gender',
+        'name' => 'Other',
+        'return' => $ret,
+      ));
     }
     return $option[$ret];
   }
