@@ -200,7 +200,7 @@ function genderselfidentify_civicrm_pageRun(&$page) {
 
   // For contact summary view
   if (in_array($pageClass, array('CRM_Contact_Page_View_Summary', 'CRM_Contact_Page_Inline_Demographics'))) {
-    $cid = $page->get_template_vars('id');
+    $cid = $page->getTemplateVars('id');
     if ($cid) {
       $page->assign('gender_display', htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($cid)));
     }
@@ -212,7 +212,7 @@ function genderselfidentify_civicrm_pageRun(&$page) {
   // For profile listings
   elseif ($pageClass == 'CRM_Profile_Page_Listings') {
     $genderRow = NULL;
-    $columnHeaders = $page->get_template_vars('columnHeaders');
+    $columnHeaders = $page->getTemplateVars('columnHeaders');
     if ($columnHeaders) {
       foreach ($columnHeaders as $num => $col) {
         if (CRM_Utils_Array::value('field_name', $col) === 'gender_id') {
@@ -221,7 +221,7 @@ function genderselfidentify_civicrm_pageRun(&$page) {
       }
     }
     if ($genderRow) {
-      $rows = $page->get_template_vars('rows');
+      $rows = $page->getTemplateVars('rows');
       if ($rows) {
         $other = CRM_Genderselfidentify_BAO_Gender::otherOption('label');
         foreach ($rows as &$row) {
@@ -240,11 +240,11 @@ function genderselfidentify_civicrm_pageRun(&$page) {
 
   // For profile view
   elseif (in_array($pageClass, array('CRM_Profile_Page_View', 'CRM_Profile_Page_Dynamic'))) {
-    $profileFields = $page->get_template_vars('profileFields');
-    $row = $page->get_template_vars('row');
+    $profileFields = $page->getTemplateVars('profileFields');
+    $row = $page->getTemplateVars('row');
     foreach ($profileFields as $key => &$field) {
       if ($key == 'gender_id') {
-        $row[$field['label']] = $field['value'] = htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($page->get_template_vars('cid')));
+        $row[$field['label']] = $field['value'] = htmlspecialchars(CRM_Genderselfidentify_BAO_Gender::get($page->getTemplateVars('cid')));
         $page->assign('row', $row);
         $page->assign('profileFields', $profileFields);
         break;
