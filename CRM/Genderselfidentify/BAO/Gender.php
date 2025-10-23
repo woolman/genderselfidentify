@@ -4,7 +4,7 @@ class CRM_Genderselfidentify_BAO_Gender {
 
   /**
    * @return int
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public static function getCustomFieldId() {
     static $id;
@@ -22,7 +22,7 @@ class CRM_Genderselfidentify_BAO_Gender {
   /**
    * @param string $ret
    * @return int
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public static function otherOption($ret = 'value') {
     static $option;
@@ -41,7 +41,7 @@ class CRM_Genderselfidentify_BAO_Gender {
    *
    * @param int $contactId
    * @return string
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public static function get($contactId) {
     if (!$contactId) {
@@ -58,7 +58,7 @@ class CRM_Genderselfidentify_BAO_Gender {
   /**
    * @param string $input
    * @return int
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public static function match($input) {
     $input = trim($input);

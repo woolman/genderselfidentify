@@ -88,7 +88,7 @@ function genderselfidentify_civicrm_disable() {
     ));
   }
   // If custom data doesn't exist, ignore
-  catch (API_Exception $e) {}
+  catch (CRM_Core_Exception $e) {}
 }
 
 /**
@@ -276,7 +276,7 @@ function genderselfidentify_civicrm_searchColumns($objectName, &$headers, &$rows
  * Add "Other" gender option if it doesn't exist
  * Ensure it is enabled and reserved if it already exists
  *
- * @throws \CiviCRM_API3_Exception
+ * @throws \CRM_Core_Exception
  */
 function _genderselfidentify_add_other_option() {
   $options = civicrm_api3('OptionValue', 'get', array('option_group_id' => 'gender'));
