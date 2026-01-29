@@ -15,10 +15,19 @@
   <releaseDate>2020-06-12</releaseDate>
   <version>1.2.1</version>
   <compatibility>
-    <ver>5.0</ver>
+    <ver>5.51</ver>
   </compatibility>
   <comments>There are no configuration options for this extension. Simply install it and users will be able to enter gender in an unrestricted way.</comments>
   <civix>
     <namespace>CRM/Genderselfidentify</namespace>
+    <format>25.10.2</format>
   </civix>
+  <classloader>
+    <psr0 prefix="CRM_" path="."/>
+    <psr4 prefix="Civi\" path="Civi"/>
+  </classloader>
+  <upgrader>CiviMix\Schema\Genderselfidentify\AutomaticUpgrader</upgrader>
+  <mixins>
+    <mixin>scan-classes@1.0.0</mixin>
+  </mixins>
 </extension>
