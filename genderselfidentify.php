@@ -12,17 +12,6 @@ function genderselfidentify_civicrm_config(&$config) {
 }
 
 /**
- * Implements hook_civicrm_xmlMenu
- *
- * @param $files array(string)
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
- */
-function genderselfidentify_civicrm_xmlMenu(&$files) {
-  _genderselfidentify_civix_civicrm_xmlMenu($files);
-}
-
-/**
  * Implements hook_civicrm_install
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
@@ -30,15 +19,6 @@ function genderselfidentify_civicrm_xmlMenu(&$files) {
 function genderselfidentify_civicrm_install() {
   _genderselfidentify_civix_civicrm_install();
   _genderselfidentify_add_other_option();
-}
-
-/**
- * Implements hook_civicrm_uninstall
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
- */
-function genderselfidentify_civicrm_uninstall() {
-  _genderselfidentify_civix_civicrm_uninstall();
 }
 
 /**
@@ -69,7 +49,6 @@ function genderselfidentify_civicrm_enable() {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
  */
 function genderselfidentify_civicrm_disable() {
-  _genderselfidentify_civix_civicrm_disable();
   try {
     $group = civicrm_api3('CustomGroup', 'get', array(
       'name' => 'Genderselfidentify',
@@ -89,42 +68,6 @@ function genderselfidentify_civicrm_disable() {
   }
   // If custom data doesn't exist, ignore
   catch (CRM_Core_Exception $e) {}
-}
-
-/**
- * Implements hook_civicrm_upgrade
- *
- * @param $op string, the type of operation being performed; 'check' or 'enqueue'
- * @param $queue CRM_Queue_Queue, (for 'enqueue') the modifiable list of pending up upgrade tasks
- *
- * @return mixed  based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
- *                for 'enqueue', returns void
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
- */
-function genderselfidentify_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  return _genderselfidentify_civix_civicrm_upgrade($op, $queue);
-}
-
-/**
- * Implements hook_civicrm_managed
- *
- * Generate a list of entities to create/deactivate/delete when this module
- * is installed, disabled, uninstalled.
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
- */
-function genderselfidentify_civicrm_managed(&$entities) {
-  _genderselfidentify_civix_civicrm_managed($entities);
-}
-
-/**
- * Implements hook_civicrm_alterSettingsFolders
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
- */
-function genderselfidentify_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
-  _genderselfidentify_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
 /**
