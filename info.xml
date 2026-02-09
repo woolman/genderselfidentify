@@ -15,7 +15,7 @@
   <releaseDate>2020-06-12</releaseDate>
   <version>1.2.1</version>
   <compatibility>
-    <ver>5.0</ver>
+    <ver>6.0</ver>
   </compatibility>
   <comments>There are no configuration options for this extension. Simply install it and users will be able to enter gender in an unrestricted way.</comments>
   <civix>
